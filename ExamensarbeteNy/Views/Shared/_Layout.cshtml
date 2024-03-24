@@ -27,12 +27,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-                    @foreach (var category in Model)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="VisaProdukter" asp-route-kategoriId="@category.Id">@category.Namn</a>
-                        </li>
-                    }
+
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Bevakning" asp-action="Bevakningar">Bevakningar</a>
                     </li>

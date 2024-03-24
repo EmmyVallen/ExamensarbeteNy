@@ -5,7 +5,21 @@
     <img src="@Model.BildUrl" alt="Produktbild">
     <p>Beskrivning: @Model.Beskrivning</p>
     <p>Pris: @Model.Pris</p>
-    <form asp-action="BevakaProdukt" asp-route-id="@Model.Id" method="post">
-        <button type="submit">Bevaka vara</button>
-    </form>
+<button>LÄGG I VARUKORG</button>
+</div>
+
+<div class="similarproducts">
+    <h2>Produkter i samma kategori</h2>
+    <ul>
+        @foreach (var product in ViewBag.SimilarProducts)
+        {
+            <li>
+                <a href="@Url.Action("VisaProdukt", "Product", new { id = product.Id })">
+                    <img src="@product.BildUrl" alt="Produktbild">
+                    <p>@product.Namn</p>
+                    <p>Pris: @product.Pris</p>
+                </a>
+            </li>
+        }
+    </ul>
 </div>

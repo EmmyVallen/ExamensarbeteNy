@@ -28,8 +28,35 @@ namespace ExamensarbeteNy.Controllers
             {
                 return NotFound(); // Returnera 404 Not Found om produkten inte hittas
             }
+			// Hämta fyra produkter från samma kategori som den aktuella produkten
+			var similarProducts = _context.Produkter
+				.Where(p => p.KategoriId == produkt.KategoriId && p.Id != produkt.Id)
+				.Take(4)
+				.ToList();
 
-            return View(produkt); // Returnera vyn för att visa produkten
+			ViewBag.SimilarProducts = similarProducts;
+
+			return View(produkt); // Returnera vyn för att visa produkten
+        }
+
+
+        // Visa formuläret för att skapa en ny produkt
+        public IActionResult SkapaProdukt()
+        {
+            return View();
+        }
+
+        // Hantera POST-begäran för att spara den nya produkten
+        [HttpPost]
+        public IActionResult SkapaProdukt(Produkt produkt)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Produkter.Add(produkt);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Home"); // Redirect till startsidan eller annan lämplig plats
+            }
+            return View(produkt);
         }
     }
 }
