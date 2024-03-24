@@ -1,0 +1,30 @@
+﻿@model List<Produkt> // Antag att du har en lista med produkter i kundkorgen
+
+<h1>Din kundkorg</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Namn</th>
+                <th>Pris</th>
+                <th>Beskrivning</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var produkt in Model)
+            {
+                <tr>
+                    <td>@produkt.Namn</td>
+                    <td>@produkt.Pris</td>
+                    <td>@produkt.Beskrivning</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Din kundkorg är tom.</p>
+}

@@ -1,0 +1,11 @@
+﻿@model Produkt
+
+<div>
+    <h1>@Model.Namn</h1>
+    <img src="@Model.BildUrl" alt="Produktbild">
+    <p>Beskrivning: @Model.Beskrivning</p>
+    <p>Pris: @Model.Pris</p>
+    <form asp-action="BevakaProdukt" asp-route-id="@Model.Id" method="post">
+        <button type="submit">Bevaka vara</button>
+    </form>
+</div>

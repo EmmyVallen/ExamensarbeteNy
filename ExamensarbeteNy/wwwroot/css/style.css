@@ -1,0 +1,37 @@
+﻿
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: E1E1E1;
+}
+.navbar1 {
+    background-color: #A9B9AF;
+}
+
+div.produkt-info {
+    display: flex;
+    flex-direction: row;
+}
+.wrapper {
+    background-color: #8E8E88; 
+}
+div.text-info {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.bevaka-btn {
+    padding: 8px 16px;
+    background-color: #86847A;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+    .bevaka-btn:hover {
+        background-color: darkgrey;
+    }

@@ -1,0 +1,16 @@
+﻿@model List<ExamensarbeteNy.Models.Kategori>
+
+@{
+    ViewData["Title"] = "Startsida";
+}
+<h3>VÄLKOMMEN TILL TRADE TREASURE</h3>
+
+
+<h2>Se alla kategorier:</h2>
+<ul>
+    @foreach (var category in Model)
+    {
+        <li><a href="@Url.Action("VisaProdukter", "Home", new { kategoriId = category.Id })">@category.Namn</a></li>
+    }
+</ul>
+

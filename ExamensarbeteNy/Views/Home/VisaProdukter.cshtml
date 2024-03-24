@@ -1,0 +1,36 @@
+﻿@model List<Produkt>
+
+@if (Model != null && Model.Any())
+{
+    <h1>Produkter inom vald kategori</h1>
+
+    <ul>
+        @foreach (var produkt in Model)
+        {
+            <li>
+                <div class="produkt-info">
+                    <a href="@Url.Action("VisaProdukt", "Product", new { id = produkt.Id })">
+                    <img src="@produkt.BildUrl" alt="Produktbild">
+
+                    <div class="text-info">
+                        <div class="wrapper">
+                        <h3>@produkt.Namn</h3>
+
+                        <p>@produkt.Beskrivning</p>
+                        <p>Pris: @produkt.Pris</p>
+						
+                    <div class="buttonbox">
+					<button>Bevaka vara</button>
+							</div>
+						</div>
+					</div>
+                    </a>
+                </div>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>Inga produkter hittades för den angivna kategorin.</p>
+}
