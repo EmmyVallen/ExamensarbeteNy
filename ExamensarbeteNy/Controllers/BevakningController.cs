@@ -11,8 +11,11 @@ namespace ExamensarbeteNy.Controllers
         {
             _context = context;
         }
+
+
         public IActionResult Bevakningar()
         {
+            ViewBag.AllCategories = _context.Kategorier.ToList();
             // Hämta användarens bevakningar från databasen
             var bevakningar = _context.Bevakningar.ToList(); // Antag att Bevakningar är en DbSet i din DbContext
 

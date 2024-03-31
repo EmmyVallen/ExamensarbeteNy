@@ -1,15 +1,22 @@
 ﻿using ExamensarbeteNy.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExamensarbeteNy.Controllers
 {
     public class KundkorgController : Controller
     {
+        private readonly ApplicationContext _context;
+
+        public KundkorgController(ApplicationContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            // Implementera logik för att hämta och visa kundkorgen
-            List<Produkt> kundkorg = new List<Produkt>(); // Antag att du hämtar kundkorgen från databasen eller någon annan plats
-            return View(kundkorg);
+            ViewBag.AllCategories = _context.Kategorier.ToList();
+            return View();
         }
+
     }
 }

@@ -16,17 +16,18 @@ namespace ExamensarbeteNy.Controllers
 
         public IActionResult Index()
         {
-            var categories = _context.Kategorier.ToList();
-            return View(categories);
+            ViewBag.AllCategories = _context.Kategorier.ToList();
+            return View();
         }
 
         public IActionResult VisaProdukter(int kategoriId)
         {
             var produkterIKategori = _context.Produkter
-                .Where(p => p.KategoriId == kategoriId)
-                .Include(p => p.Kategori)
-                .ToList();
+        .Where(p => p.KategoriId == kategoriId)
+        .Include(p => p.Kategori)
+        .ToList();
 
+            ViewBag.AllCategories = _context.Kategorier.ToList();
             return View(produkterIKategori);
         }
 
