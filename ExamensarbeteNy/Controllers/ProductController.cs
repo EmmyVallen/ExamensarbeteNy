@@ -15,12 +15,14 @@ namespace ExamensarbeteNy.Controllers
 
 		public IActionResult Index()
 		{
-			return View();
+            
+            return View();
 		}
 
         // Åtgärd för att visa en enskild produkt
         public IActionResult VisaProdukt(int id)
         {
+            ViewBag.AllCategories = _context.Kategorier.ToList();
             // Hämta produkten från databasen baserat på det angivna ID:t
             var produkt = _context.Produkter.FirstOrDefault(p => p.Id == id);
 

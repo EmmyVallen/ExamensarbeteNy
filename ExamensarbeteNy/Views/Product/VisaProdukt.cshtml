@@ -1,15 +1,36 @@
 ﻿@model Produkt
+<section class="product">
+<div class="productimage">
 
-<div>
-    <h1>@Model.Namn</h1>
     <img src="@Model.BildUrl" alt="Produktbild">
-    <p>Beskrivning: @Model.Beskrivning</p>
+	</div>
+    <div class="productinformation">
+	<h2>@Model.Namn</h2>
     <p>Pris: @Model.Pris</p>
+		<p>Beskrivning: @Model.Beskrivning</p>
 <button>LÄGG I VARUKORG</button>
 </div>
+<div class="userbox">
+    <p>SÄLJES AV KOPPLA ANVÄNDARE</p>
+</div>
 
-<div class="similarproducts">
-    <h2>Produkter i samma kategori</h2>
+<div class="information">
+    <h2>Känn dig trygg när du handlar hos ....</h2>
+    <div class="boxes">
+    <div class="first">
+        information
+    </div>
+    <div class="first">
+        information
+			</div>
+		</div>
+</div>
+
+    <div class="similarproducts"
+	<h2>Liknande varor</h2>
+
+<div class="productsrow">
+
     <ul>
         @foreach (var product in ViewBag.SimilarProducts)
         {
@@ -22,4 +43,6 @@
             </li>
         }
     </ul>
-</div>
+	</div>
+    </div>
+</section>

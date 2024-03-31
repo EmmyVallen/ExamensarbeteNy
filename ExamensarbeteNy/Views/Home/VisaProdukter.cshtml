@@ -1,36 +1,99 @@
 ﻿@model List<Produkt>
+<section class="category">
 
-@if (Model != null && Model.Any())
+        <div class="top-section">
+            <div class="searchbar">
+                <input type="text" id="searchInput" placeholder="Sök produkter">
+                <button onclick="search()">Sök</button>
+            </div>
+            <div class="boxflex">
+            <div class="ad-count">
+                <p>Antal annonser: @Model.Count()</p>
+            </div>
+
+            <div class="sort-dropdown">
+                <select id="sortDropdown">
+                    <option value="prisAsc">Pris - Stigande</option>
+                    <option value="prisDesc">Pris - Fallande</option>
+                    <!-- Andra sorteringsalternativ här -->
+                </select>
+			</div>
+		</div>
+        </div>
+
+    @if (Model != null && Model.Any())
 {
-    <h1>Produkter inom vald kategori</h1>
-
+    <div class="productscategory">
     <ul>
         @foreach (var produkt in Model)
         {
             <li>
                 <div class="produkt-info">
+                    <div class="wrapper">
                     <a href="@Url.Action("VisaProdukt", "Product", new { id = produkt.Id })">
                     <img src="@produkt.BildUrl" alt="Produktbild">
-
+							
                     <div class="text-info">
-                        <div class="wrapper">
-                        <h3>@produkt.Namn</h3>
-
-                        <p>@produkt.Beskrivning</p>
-                        <p>Pris: @produkt.Pris</p>
-						
+                        <div class="textbox">
+											<h3>@produkt.Namn</h3>
+								</a>
+											<p>Pris: @produkt.Pris</p>
+								
+						</div>
                     <div class="buttonbox">
 					<button>Bevaka vara</button>
-							</div>
 						</div>
 					</div>
-                    </a>
-                </div>
+							
+             
             </li>
+         
         }
     </ul>
+    </div>
 }
 else
 {
     <p>Inga produkter hittades för den angivna kategorin.</p>
-}
+	}
+</section>
+
+<script>
+    function search() {
+        var input, filter, ul, li, a, i, txtValue;
+        input = document.getElementById('searchInput');
+        filter = input.value.toUpperCase();
+        ul = document.querySelector('.productscategory ul');
+        li = ul.getElementsByTagName('li');
+
+        for (i = 0; i < li.length; i++) {
+            a = li[i].getElementsByTagName('h3')[0];
+            txtValue = a.textContent || a.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                li[i].style.display = '';
+            } else {
+                li[i].style.display = 'none';
+            }
+        }
+    }
+
+    document.getElementById('sortDropdown').addEventListener('change', function () {
+        var selectedValue = this.value;
+        var ul = document.querySelector('.productscategory ul');
+        var li = Array.from(ul.getElementsByTagName('li'));
+
+        if (selectedValue === 'prisAsc') {
+            li.sort(function (a, b) {
+                return parseFloat(a.querySelector('p:nth-child(3)').innerText.split(' ')[1]) - parseFloat(b.querySelector('p:nth-child(3)').innerText.split(' ')[1]);
+            });
+        } else if (selectedValue === 'prisDesc') {
+            li.sort(function (a, b) {
+                return parseFloat(b.querySelector('p:nth-child(3)').innerText.split(' ')[1]) - parseFloat(a.querySelector('p:nth-child(3)').innerText.split(' ')[1]);
+            });
+        }
+
+        li.forEach(function (elem) {
+            ul.appendChild(elem);
+        });
+    });
+</script>
