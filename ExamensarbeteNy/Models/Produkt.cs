@@ -13,6 +13,11 @@
         public int KategoriId { get; set; } // Foreign key för kategorin
         public Kategori Kategori { get; set; } // Navigationsegenskap för att hämta kategorin
 
+        // Förhållande till child-kategori
+        public int? ChildKategoriId { get; set; } // Foreign key för child-kategori
+        public ChildKategori ChildKategori { get; set; } // Navigationsegenskap för att hämta child-kategori
+
+
         // Förhållande till användaren
         public string AnvändarId { get; set; } // Foreign key för användaren
         public Användare Användare { get; set; } // Navigationsegenskap för att hämta användaren
