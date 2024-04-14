@@ -4,14 +4,16 @@ using ExamensarbeteNy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExamensarbeteNy.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240414114008_AddChildKategoriToTable")]
+    partial class AddChildKategoriToTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,6 +47,7 @@ namespace ExamensarbeteNy.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AnvändarId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AnvändareId")
@@ -149,9 +152,6 @@ namespace ExamensarbeteNy.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ChildKategoriId")
-                        .HasColumnType("int");
-
                     b.Property<int>("KategoriId")
                         .HasColumnType("int");
 
@@ -168,8 +168,6 @@ namespace ExamensarbeteNy.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AnvändareId");
-
-                    b.HasIndex("ChildKategoriId");
 
                     b.HasIndex("KategoriId");
 
@@ -225,10 +223,6 @@ namespace ExamensarbeteNy.Migrations
                         .WithMany()
                         .HasForeignKey("AnvändareId");
 
-                    b.HasOne("ExamensarbeteNy.Models.ChildKategori", "ChildKategori")
-                        .WithMany()
-                        .HasForeignKey("ChildKategoriId");
-
                     b.HasOne("ExamensarbeteNy.Models.Kategori", "Kategori")
                         .WithMany("Produkter")
                         .HasForeignKey("KategoriId")
@@ -240,8 +234,6 @@ namespace ExamensarbeteNy.Migrations
                         .HasForeignKey("KundkorgId");
 
                     b.Navigation("Användare");
-
-                    b.Navigation("ChildKategori");
 
                     b.Navigation("Kategori");
                 });

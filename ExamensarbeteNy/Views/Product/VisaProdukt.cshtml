@@ -5,17 +5,23 @@
     <img src="@Model.BildUrl" alt="Produktbild">
 	</div>
     <div class="productinformation">
+        <div class="text">
 	<h2>@Model.Namn</h2>
-    <p>Pris: @Model.Pris</p>
-		<p>Beskrivning: @Model.Beskrivning</p>
-<button>LÄGG I VARUKORG</button>
+    <h3><strong>@Model.Pris kr</strong> </h3>
+		<h4>Beskrivning:</h4>
+        <p>@Model.Beskrivning</p>
+		</div>
+<div class="buttonbox">
+    <button>Bevaka vara</button>
+</div>
 </div>
 <div class="userbox">
-    <p>SÄLJES AV KOPPLA ANVÄNDARE</p>
+    <h5>SÄLJES AV:</h5>
+        <p>Verifierad säljare</p>
 </div>
 
 <div class="information">
-    <h2>Känn dig trygg när du handlar hos ....</h2>
+    <h3>Känn dig trygg när du handlar hos </h3>
     <div class="boxes">
     <div class="first">
         information
@@ -26,8 +32,8 @@
 		</div>
 </div>
 
-    <div class="similarproducts"
-	<h2>Liknande varor</h2>
+    <div class="similarproducts">
+		<h4>Liknande varor</h4>
 
 <div class="productsrow">
 
@@ -37,8 +43,8 @@
             <li>
                 <a href="@Url.Action("VisaProdukt", "Product", new { id = product.Id })">
                     <img src="@product.BildUrl" alt="Produktbild">
-                    <p>@product.Namn</p>
-                    <p>Pris: @product.Pris</p>
+                    <h3>@product.Namn</h3>
+                    <p>@product.Pris kr</p>
                 </a>
             </li>
         }
