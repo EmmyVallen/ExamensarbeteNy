@@ -16,8 +16,11 @@ namespace ExamensarbeteNy.Controllers
 
         public IActionResult Index()
         {
+
             var categoriesWithChildren = _context.Kategorier.Include(k => k.ChildKategorier).ToList();
             ViewBag.AllCategories = categoriesWithChildren;
+            ViewBag.AboutLink = Url.Action("About", "Home");
+            ViewBag.TermsLink = Url.Action("Terms", "Home");
             return View();
         }
 
@@ -46,7 +49,15 @@ namespace ExamensarbeteNy.Controllers
             return View(produkterIKategori.ToList());
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
 
+        public IActionResult Terms()
+        {
+            return View();
+        }
 
 
 

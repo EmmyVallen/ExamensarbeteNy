@@ -23,24 +23,26 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
                     <ul class="nav">
-                 
-                        @foreach (var category in ViewBag.AllCategories)
+                        @if (ViewBag.AllCategories != null)
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark @(ViewContext.RouteData.Values["kategoriId"] != null && Convert.ToInt32(ViewContext.RouteData.Values["kategoriId"]) == category.Id ? "active" : "")" href="@Url.Action("VisaProdukter", "Home", new { kategoriId = category.Id })">@category.Namn</a>
-                                <!-- Visa underkategorier för denna kategori om de finns -->
-                                @if (category.ChildKategorier != null && category.ChildKategorier.Count > 0)
-                                {
-                                    <ul class="sub-categories">
-                                        @foreach (var subcategory in category.ChildKategorier)
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("VisaProdukter", "Home", new { kategoriId = subcategory.Id })">@subcategory.Namn</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                }
-                            </li>
+                            @foreach (var category in ViewBag.AllCategories)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark @(ViewContext.RouteData.Values["kategoriId"] != null && Convert.ToInt32(ViewContext.RouteData.Values["kategoriId"]) == category.Id ? "active" : "")" href="@Url.Action("VisaProdukter", "Home", new { kategoriId = category.Id })">@category.Namn</a>
+                                    <!-- Visa underkategorier för denna kategori om de finns -->
+                                    @if (category.ChildKategorier != null && category.ChildKategorier.Count > 0)
+                                    {
+                                        <ul class="sub-categories">
+                                            @foreach (var subcategory in category.ChildKategorier)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("VisaProdukter", "Home", new { kategoriId = subcategory.Id })">@subcategory.Namn</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
                         }
                     </ul>
 
@@ -68,9 +70,12 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-           <p>OM OSS</p>
-           <p>VILLKOR</p>
+            <p><a class="nav-link" href="@ViewBag.AboutLink">OM OSS</a></p>
+            <p><a class="nav-link" href="@ViewBag.TermsLink">VILLKOR</a></p>
         </div>
+
+
+
         <script>
         document.getElementById('sortDropdown').addEventListener('change', function () {
         var selectedValue = this.value;
