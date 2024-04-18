@@ -120,10 +120,11 @@ section.category .productscategory .produkt-info a{text-decoration:none; color:b
         
         
 /*PRODUKTSIDA*/
-section.product .productinformation{margin:30px 0 50px;}
+section.product .productinformation{margin:30px 0 50px; display:flex; align-content:center;}
 
+section.product .productimage{display:flex; justify-content:center;}
 
-    section.product .productinformation .buttonbox {
+    section.product .buttonbox {
         display: flex;
         justify-content: flex-end;
     }
@@ -169,7 +170,16 @@ section.product .similarproducts {
 
 section.product .similarproducts .productsrow{background-color: #D9D9D9; padding-top:25px;}
     section.product .similarproducts .productsrow ul li a{color:black;}
+
+    .similarproducts .productsrow ul li a img{height:140px;}
+
+
+    /*OM OSS*/
+    .aboutbox{margin-top:50px;}
+
     /*FOOTER*/
-    footer {
-        background-color: rgba(169, 185, 175, 0.4) !important;
-    }
+footer {
+    background-color: rgba(169, 185, 175, 0.4) !important;
+   padding-top:20px;
+} 
+a [b-8s5xvfnyqg]{margin-bottom:-60px; color:black !important;}
