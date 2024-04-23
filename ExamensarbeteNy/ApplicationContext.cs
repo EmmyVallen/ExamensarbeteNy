@@ -18,6 +18,7 @@ namespace ExamensarbeteNy
         public DbSet<Användare> Användare { get; set; }
         public DbSet<Bevakning> Bevakningar { get; set; }
         public DbSet<Kundkorg> Kundkorgar { get; set; }
+        public DbSet<ChildKategori> ChildKategorier { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

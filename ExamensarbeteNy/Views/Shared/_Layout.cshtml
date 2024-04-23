@@ -13,20 +13,40 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ExamensarbeteNy</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="https://cdn.pixabay.com/photo/2013/07/13/10/21/apple-157031_1280.png" alt="Företagslogotyp" style="max-height: 30px; max-width: 150px;">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+                    <ul class="nav">
+                        @if (ViewBag.AllCategories != null)
+                        {
+                            @foreach (var category in ViewBag.AllCategories)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark @(ViewContext.RouteData.Values["kategoriId"] != null && Convert.ToInt32(ViewContext.RouteData.Values["kategoriId"]) == category.Id ? "active" : "")" href="@Url.Action("VisaProdukter", "Home", new { kategoriId = category.Id })">@category.Namn</a>
+                                    <!-- Visa underkategorier för denna kategori om de finns -->
+                                    @if (category.ChildKategorier != null && category.ChildKategorier.Count > 0)
+                                    {
+                                        <ul class="sub-categories">
+                                            @foreach (var subcategory in category.ChildKategorier)
+                                            {
+                                                <li>
+                                                    <a href="@Url.Action("VisaProdukter", "Home", new { kategoriId = subcategory.Id })">@subcategory.Namn</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    }
+                                </li>
+                            }
+                        }
                     </ul>
+
+
 
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Bevakning" asp-action="Bevakningar">Bevakningar</a>
@@ -50,8 +70,46 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - ExamensarbeteNy - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <p><a class="nav-link" href="@ViewBag.AboutLink">OM OSS</a></p>
+            <p><a class="nav-link" href="@ViewBag.TermsLink">VILLKOR</a></p>
         </div>
+
+
+
+        <script>
+        document.getElementById('sortDropdown').addEventListener('change', function () {
+        var selectedValue = this.value;
+        var ul = document.querySelector('.productscategory ul');
+        var li = Array.from(ul.getElementsByTagName('li'));
+
+        if (selectedValue === 'prisAsc') {
+        li.sort(function (a, b) {
+        var priceA = parseFloat(a.querySelector('.textbox p').innerText.split(' ')[1]);
+        var priceB = parseFloat(b.querySelector('.textbox p').innerText.split(' ')[1]);
+        return priceA - priceB;
+        });
+        } else if (selectedValue === 'prisDesc') {
+        li.sort(function (a, b) {
+        var priceA = parseFloat(a.querySelector('.textbox p').innerText.split(' ')[1]);
+        var priceB = parseFloat(b.querySelector('.textbox p').innerText.split(' ')[1]);
+        return priceB - priceA;
+        });
+        }
+
+        li.forEach(function (elem) {
+        ul.appendChild(elem);
+        });
+        });
+
+
+            // Visa en bekräftelsemeddelande efter att användaren har bevaka en vara
+            document.querySelector('form[action="BevakaProdukt"]').addEventListener('submit', function (event) {
+                alert('Produkten har lagts till i dina bevakningar!');
+            });
+
+        </script>
+
+
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

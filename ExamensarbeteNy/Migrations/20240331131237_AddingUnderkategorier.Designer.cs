@@ -4,14 +4,16 @@ using ExamensarbeteNy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExamensarbeteNy.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240331131237_AddingUnderkategorier")]
+    partial class AddingUnderkategorier
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,6 +47,7 @@ namespace ExamensarbeteNy.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AnvändarId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AnvändareId")
@@ -63,31 +66,6 @@ namespace ExamensarbeteNy.Migrations
                     b.ToTable("Bevakningar");
                 });
 
-            modelBuilder.Entity("ExamensarbeteNy.Models.ChildKategori", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Beskrivning")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("KategoriId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Namn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KategoriId");
-
-                    b.ToTable("ChildKategorier");
-                });
-
             modelBuilder.Entity("ExamensarbeteNy.Models.Kategori", b =>
                 {
                     b.Property<int>("Id")
@@ -103,7 +81,12 @@ namespace ExamensarbeteNy.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ÖverkategoriId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ÖverkategoriId");
 
                     b.ToTable("Kategorier");
                 });
@@ -149,9 +132,6 @@ namespace ExamensarbeteNy.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ChildKategoriId")
-                        .HasColumnType("int");
-
                     b.Property<int>("KategoriId")
                         .HasColumnType("int");
 
@@ -168,8 +148,6 @@ namespace ExamensarbeteNy.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AnvändareId");
-
-                    b.HasIndex("ChildKategoriId");
 
                     b.HasIndex("KategoriId");
 
@@ -197,15 +175,13 @@ namespace ExamensarbeteNy.Migrations
                     b.Navigation("Produkt");
                 });
 
-            modelBuilder.Entity("ExamensarbeteNy.Models.ChildKategori", b =>
+            modelBuilder.Entity("ExamensarbeteNy.Models.Kategori", b =>
                 {
-                    b.HasOne("ExamensarbeteNy.Models.Kategori", "Kategori")
-                        .WithMany("ChildKategorier")
-                        .HasForeignKey("KategoriId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("ExamensarbeteNy.Models.Kategori", "Överkategori")
+                        .WithMany("Underkategorier")
+                        .HasForeignKey("ÖverkategoriId");
 
-                    b.Navigation("Kategori");
+                    b.Navigation("Överkategori");
                 });
 
             modelBuilder.Entity("ExamensarbeteNy.Models.Kundkorg", b =>
@@ -225,10 +201,6 @@ namespace ExamensarbeteNy.Migrations
                         .WithMany()
                         .HasForeignKey("AnvändareId");
 
-                    b.HasOne("ExamensarbeteNy.Models.ChildKategori", "ChildKategori")
-                        .WithMany()
-                        .HasForeignKey("ChildKategoriId");
-
                     b.HasOne("ExamensarbeteNy.Models.Kategori", "Kategori")
                         .WithMany("Produkter")
                         .HasForeignKey("KategoriId")
@@ -240,8 +212,6 @@ namespace ExamensarbeteNy.Migrations
                         .HasForeignKey("KundkorgId");
 
                     b.Navigation("Användare");
-
-                    b.Navigation("ChildKategori");
 
                     b.Navigation("Kategori");
                 });
@@ -256,9 +226,9 @@ namespace ExamensarbeteNy.Migrations
 
             modelBuilder.Entity("ExamensarbeteNy.Models.Kategori", b =>
                 {
-                    b.Navigation("ChildKategorier");
-
                     b.Navigation("Produkter");
+
+                    b.Navigation("Underkategorier");
                 });
 
             modelBuilder.Entity("ExamensarbeteNy.Models.Kundkorg", b =>

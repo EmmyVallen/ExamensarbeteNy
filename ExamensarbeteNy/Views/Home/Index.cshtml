@@ -3,15 +3,14 @@
 @{
     ViewData["Title"] = "Startsida";
 }
+<section class="header">
 <h3>VÄLKOMMEN TILL TRADE TREASURE</h3>
+<p>Här ska vi lägga en header bild</p>
+</section>
 
 
-<h2>Se alla kategorier:</h2>
-<ul>
-    @foreach (var category in Model)
-    {
-        <li><a href="@Url.Action("VisaProdukter", "Home", new { kategoriId = category.Id })">@category.Namn</a></li>
-    }
-</ul>
 
 <a class="btn btn-primary" asp-controller="Product" asp-action="SkapaProdukt">Skapa ny produkt</a>
+
+
+

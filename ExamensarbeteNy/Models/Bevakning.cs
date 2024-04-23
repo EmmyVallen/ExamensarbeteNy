@@ -5,7 +5,7 @@
         public int Id { get; set; }
 
         // Förhållande till användaren
-        public string AnvändarId { get; set; } // Foreign key för användaren
+        public string? AnvändarId { get; set; } // Foreign key för användaren
         public Användare Användare { get; set; } // Navigationsegenskap för att hämta användaren
 
         // Förhållande till produkten

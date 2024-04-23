@@ -1,36 +1,90 @@
 ﻿@model List<Produkt>
+<section class="category">
 
-@if (Model != null && Model.Any())
+        <div class="top-section">
+            <div class="searchbar">
+                <input type="text" id="searchInput" placeholder="Sök produkter">
+                <button onclick="search()">Sök</button>
+            </div>
+
+        <form action="@Url.Action("VisaProdukter", "Home")" method="get">
+            <label for="kategori">Välj kategori:</label>
+            <select name="kategoriId" id="kategoriId">
+                <option value="">Alla kategorier</option>
+                @foreach (var category in ViewBag.AllCategories)
+                {
+                    <option value="@category.Id">@category.Namn</option>
+                    @foreach (var childCategory in category.ChildKategorier)
+                    {
+                        <option value="@childCategory.Id">- @childCategory.Namn</option>
+                    }
+                }
+            </select>
+
+            <label for="pris">Välj prisintervall:</label>
+            <select name="pris" id="pris">
+                <option value="0-100">0 - 100 kr</option>
+                <option value="100-500">100 - 500 kr</option>
+                <option value="500-1000">500 - 1000 kr</option>
+                <!-- Lägg till fler alternativ efter behov -->
+            </select>
+
+            <button type="submit">Filtrera</button>
+        </form>
+
+
+
+            <div class="boxflex">
+            <div class="ad-count">
+                <p> @Model.Count() annonser</p>
+            </div>
+
+            <div class="sort-dropdown">
+                <select id="sortDropdown">
+                    <option value="prisAsc">Pris - Stigande</option>
+                    <option value="prisDesc">Pris - Fallande</option>
+                    <!-- Andra sorteringsalternativ här -->
+                </select>
+			</div>
+		</div>
+        </div>
+
+    @if (Model != null && Model.Any())
 {
-    <h1>Produkter inom vald kategori</h1>
-
+    <div class="productscategory">
     <ul>
         @foreach (var produkt in Model)
         {
             <li>
                 <div class="produkt-info">
+                    <div class="wrapper">
                     <a href="@Url.Action("VisaProdukt", "Product", new { id = produkt.Id })">
                     <img src="@produkt.BildUrl" alt="Produktbild">
-
+							
                     <div class="text-info">
-                        <div class="wrapper">
-                        <h3>@produkt.Namn</h3>
+                        <div class="textbox">
+											<h3>@produkt.Namn</h3>
+								</a>
+											<p>Pris: @produkt.Pris</p>
 
-                        <p>@produkt.Beskrivning</p>
-                        <p>Pris: @produkt.Pris</p>
+							</div>
 						
-                    <div class="buttonbox">
-					<button>Bevaka vara</button>
+                        <div class="buttonbox">
+<button>Bevaka vara</button>
 							</div>
 						</div>
-					</div>
-                    </a>
-                </div>
+					
+							
+             
             </li>
+         
         }
     </ul>
+    </div>
 }
 else
 {
     <p>Inga produkter hittades för den angivna kategorin.</p>
-}
+	}
+</section>
+

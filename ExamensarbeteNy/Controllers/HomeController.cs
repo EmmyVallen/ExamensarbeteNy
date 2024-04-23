@@ -16,19 +16,51 @@ namespace ExamensarbeteNy.Controllers
 
         public IActionResult Index()
         {
-            var categories = _context.Kategorier.ToList();
-            return View(categories);
+
+            var categoriesWithChildren = _context.Kategorier.Include(k => k.ChildKategorier).ToList();
+            ViewBag.AllCategories = categoriesWithChildren;
+            ViewBag.AboutLink = Url.Action("About", "Home");
+            ViewBag.TermsLink = Url.Action("Terms", "Home");
+            return View();
         }
 
-        public IActionResult VisaProdukter(int kategoriId)
+        public IActionResult VisaProdukter(int? kategoriId, string pris)
         {
-            var produkterIKategori = _context.Produkter
-                .Where(p => p.KategoriId == kategoriId)
-                .Include(p => p.Kategori)
-                .ToList();
+            IQueryable<Produkt> produkterIKategori = _context.Produkter.Include(p => p.Kategori); // Inkludera kategorin för att undvika fel
+            var categoriesWithChildren = _context.Kategorier.Include(k => k.ChildKategorier).ToList(); // Inkludera även child-kategorier för att skicka till vyn
 
-            return View(produkterIKategori);
+            // Filtrera efter kategori om en kategori valdes
+            if (kategoriId.HasValue)
+            {
+                produkterIKategori = produkterIKategori.Where(p => p.KategoriId == kategoriId.Value);
+            }
+
+            // Filtrera efter prisintervall om ett prisintervall valdes
+            if (!string.IsNullOrEmpty(pris))
+            {
+                var priceRange = pris.Split('-').Select(int.Parse).ToArray();
+                var minPrice = priceRange[0];
+                var maxPrice = priceRange[1];
+
+                produkterIKategori = produkterIKategori.Where(p => p.Pris >= minPrice && p.Pris <= maxPrice);
+            }
+
+            ViewBag.AllCategories = categoriesWithChildren;
+            return View(produkterIKategori.ToList());
         }
+
+        public IActionResult About()
+        {
+            return View();
+        }
+
+        public IActionResult Terms()
+        {
+            return View();
+        }
+
+
+
 
 
         public IActionResult Privacy()
