@@ -15,10 +15,16 @@ img{width:200px;}
 }
 
 
+.navbar_right{display:flex;}
 
 
 
-    .navbar a{color:black !important; font-weight:600}
+
+.navbar a {
+    color: black !important;
+    font-weight: 600
+}
+.navbar-brand img{max-height:60px !important; max-width:60px !important; margin-bottom:0 !important;}
 
         .container {
             width: 90%;
@@ -46,14 +52,29 @@ ul.sub-categories li a{ text-decoration:none; }
 
 
 /*STARTSIDA*/
-section.productsbox {width:90%; margin: 0 auto;}
-section.productsbox .products{display:flex; flex-direction:row; justify-content:space-between;}
-section.productsbox .products .box { background-color: #D9D9D9;}
+section.categorysection {width:90%; margin: 0 auto;}
+    section.categorysection .bigbox {
+        display: flex;
+        flex-direction: row;
+        gap:15px;
+        margin-top:50px;
+    }
 
-
-/*KATEGORISIDA*/
-
-    section.category .top-section .searchbar{margin-bottom:10px; display.flex; justify-content:center;}
+        section.categorysection .bigbox .categorybox {
+            background-color: #D9D9D9;
+            height:100px;
+            width:250px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+            section.categorysection .bigbox .categorybox a{color:black !important; text-decoration:none;}
+            /*KATEGORISIDA*/
+            section.category .top-section .searchbar {
+                margin: 30px 0 30px;
+                display: flex;
+                justify-content: center;
+            }
 
         section.category .top-section .searchbar input {
             border: none;
@@ -66,12 +87,20 @@ section.productsbox .products .box { background-color: #D9D9D9;}
         section.category .top-section .searchbar button {
             border: none;
             padding: 8px;
-            border-radius: 10px;
+            border-radius: 0px 10px 10px 0px;
             background-color: rgba(134, 132, 122, 0.7);
-            width: 50px;
+            width: 100px;
         }
+            section.category .top-section .searchbar button:hover {
+                background-color: lightgray;
+            }
 
-    section.category .top-section .boxflex{display:flex; flex-direction:row; margin:40px 0 20px;}
+            section.category .top-section .boxflex {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                margin: 40px 0 20px;
+            }
     section.category .top-section .sort-dropdown{margin-left:20px;}
 
         section.category .top-section .sort-dropdown #sortDropdown {
@@ -120,7 +149,7 @@ section.category .productscategory .produkt-info a{text-decoration:none; color:b
         
         
 /*PRODUKTSIDA*/
-section.product .productinformation{margin:30px 0 50px; display:flex; align-content:center;}
+section.product .productinformation{margin:30px 0 50px; display:flex; justify-content:center;}
 
 section.product .productimage{display:flex; justify-content:center;}
 
