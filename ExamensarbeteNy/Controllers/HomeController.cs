@@ -48,6 +48,40 @@ namespace ExamensarbeteNy.Controllers
             ViewBag.AllCategories = categoriesWithChildren;
             return View(produkterIKategori.ToList());
         }
+        public IActionResult Frakt()
+        {
+            // Här kan du lägga kod för att visa sidan för frakt
+            return View("~/Views/Frakt.cshtml");
+        }
+        public IActionResult Skydd()
+        {
+            // Här kan du lägga kod för att visa sidan för frakt
+            return View("~/Views/Skydd.cshtml");
+        }
+
+        public IActionResult KläderTips()
+        {
+            // Här kan du lägga kod för att visa sidan för frakt
+            return View("~/Views/KläderTips.cshtml");
+        }
+        public IActionResult InredningTips()
+        {
+            // Här kan du lägga kod för att visa sidan för frakt
+            return View("~/Views/InredningTips.cshtml");
+        }
+        public IActionResult Diy()
+        {
+            // Här kan du lägga kod för att visa sidan för frakt
+            return View("~/Views/Diy.cshtml");
+        }
+
+        public IActionResult Begagnat()
+        {
+            // Här kan du lägga kod för att visa sidan för frakt
+            return View("~/Views/Begagnat.cshtml");
+        }
+
+
 
         public IActionResult About()
         {
