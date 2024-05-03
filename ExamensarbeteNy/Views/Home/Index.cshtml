@@ -3,15 +3,18 @@
 @{
     ViewData["Title"] = "Startsida";
 }
-<section class="header">
-<h3>VÄLKOMMEN TILL TRADE TREASURE</h3>
-<p>Här ska vi lägga en header bild</p>
-</section>
+
+
+
+
 
 <a class="btn btn-primary" asp-controller="Product" asp-action="SkapaProdukt">Skapa ny produkt</a>
 
 
 <section class="categorysection">
+    <div class="header_category">
+        <h3><strong>Upptäck våra kategorier</strong></h3>
+    </div>
     <div class="bigbox">
     @if (ViewBag.AllCategories != null)
     {
@@ -20,7 +23,7 @@
             var category = ViewBag.AllCategories[i];
             <div class="categorybox">
                 <a href="@Url.Action("VisaProdukter", "Home", new { kategoriId = category.Id })">
-                    <h4>@category.Namn</h4> 
+                    <h5>@category.Namn</h5> 
                 </a>
             </div>
         }
@@ -28,6 +31,65 @@
     </div>
 </section>
 
+<section class="blogsection">
+<section class="services">
+    <h4>Mer om våra tjänster</h4>
+        <a href="@Url.Action("Frakt", "Home")">
+    <div class="frakt">
+        <img src="/bilder/frakt.png" alt="Frakt" />
+        <div class="text">
+            hej
+        </div>
+    </div>
+    </a>
+        <a href="@Url.Action("Skydd", "Home")">
+    <div class="skydd">
+        <img src="/bilder/skydd.jpg" alt="Skydd" />
+        <div class="text">
+            hej
+        </div>
+    </div>
+    </a>
+</section>
+<section class="tips">
+        <h4>Mer tips och guider</h4>
+        <a href="@Url.Action("KläderTips", "Home")">
+    <div class="tips1">
+        <img src="/bilder/begagnat.jpg" alt="Begagnat" />
+        <div class="text">
+            hej
+        </div>
+    </div>
+    </a>
+        <a href="@Url.Action("InredningTips", "Home")">
+    <div class="tips2">
+        <img src="/bilder/suitcase.jpg" alt="Suitcase" />
+        <div class="text">
+            hej
+        </div>
+    </div>
+    </a>
+</section>
+<section class="inspiration">
+        <h4>Mer inspiration</h4>
+        <a href="@Url.Action("Diy", "Home")">
+    <div class="inspiration1">
+        <img src="/bilder/phone.jpg" alt="Phone" />
+        <div class="text">
+            hej
+        </div>
+    </div>
+    </a>
+        <a href="@Url.Action("Begagnat", "Home")">
+    <div class="inspiration2">
+        <img src="/bilder/diy.jpg" alt="DIY" />
+        <div class="text">
+            hej
+        </div>
+    </div>
+    </a>
+</section>
+</section>
 
 
 
