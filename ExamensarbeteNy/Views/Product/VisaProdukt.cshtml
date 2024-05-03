@@ -39,17 +39,22 @@
 <div class="productsrow">
 
     <ul>
-        @foreach (var product in ViewBag.SimilarProducts)
-        {
-            <li>
-                <a href="@Url.Action("VisaProdukt", "Product", new { id = product.Id })">
-                    <img src="@product.BildUrl" alt="Produktbild">
-                    <h3>@product.Namn</h3>
-                    <p>@product.Pris kr</p>
-                </a>
-            </li>
-        }
+                @foreach (var product in ViewBag.SimilarProducts)
+                {
+                <li>
+                    <a href="@Url.Action("VisaProdukt", "Product", new { id = product.Id })">
+                        <img src="@product.BildUrl" alt="Produktbild">
+                        <h3>@product.Namn</h3>
+                        <p>@product.Pris kr</p>
+                    </a>
+                </li>
+                }
     </ul>
-	</div>
+    </div>
     </div>
 </section>
+
+
+
+
+       

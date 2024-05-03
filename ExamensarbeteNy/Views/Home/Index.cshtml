@@ -8,9 +8,26 @@
 <p>Här ska vi lägga en header bild</p>
 </section>
 
-
-
 <a class="btn btn-primary" asp-controller="Product" asp-action="SkapaProdukt">Skapa ny produkt</a>
+
+
+<section class="categorysection">
+    <div class="bigbox">
+    @if (ViewBag.AllCategories != null)
+    {
+        @for (var i = 0; i < 4 && i < ViewBag.AllCategories.Count; i++) 
+        {
+            var category = ViewBag.AllCategories[i];
+            <div class="categorybox">
+                <a href="@Url.Action("VisaProdukter", "Home", new { kategoriId = category.Id })">
+                    <h4>@category.Namn</h4> 
+                </a>
+            </div>
+        }
+    }
+    </div>
+</section>
+
 
 
 
