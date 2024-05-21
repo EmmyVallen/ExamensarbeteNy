@@ -8,7 +8,7 @@ namespace ExamensarbeteNy.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationContext _context;
-
+        
         public HomeController(ApplicationContext context)
         {
             _context = context;
