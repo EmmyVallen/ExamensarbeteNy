@@ -1,60 +1,72 @@
 ﻿@model Produkt
-<section class="product">
-<div class="productimage">
 
-    <img src="@Model.BildUrl" alt="Produktbild">
-	</div>
+<section class="product">
+    <div class="productimage">
+        <img src="@Model.BildUrl" alt="Produktbild">
+    </div>
     <div class="productinformation">
         <div class="text">
-	<h2>@Model.Namn</h2>
-    <h3><strong>@Model.Pris kr</strong> </h3>
-		<h4>Beskrivning:</h4>
-        <p>@Model.Beskrivning</p>
-		</div>
-
-	</div>
-    <div class="buttonbox">
-		<button>Bevaka vara</button>
-	</div>
-<div class="userbox">
-    <h5>SÄLJES AV:</h5>
-        <p>Verifierad säljare</p>
-</div>
-
-<div class="information">
-    <h3>Känn dig trygg när du handlar hos </h3>
-    <div class="boxes">
-    <div class="first">
-        information
+            <h2>@Model.Namn</h2>
+            <h3><strong>@Model.Pris kr</strong></h3>
+            <h4>Beskrivning:</h4>
+            <p>@Model.Beskrivning</p>
+        </div>
     </div>
-    <div class="first">
-        information
-			</div>
-		</div>
-</div>
-
+    <div class="buttonbox">
+        <button onclick="addToCart(@Model.Id)">Lägg till i kundkorg</button>
+        <button>Bevaka vara</button>
+    </div>
+    <div class="userbox">
+        <h5>SÄLJES AV:</h5>
+        <p>Verifierad säljare</p>
+    </div>
+    <div class="information">
+        <h3>Känn dig trygg när du handlar hos </h3>
+        <div class="boxes">
+            <div class="first">
+                information
+            </div>
+            <div class="first">
+                information
+            </div>
+        </div>
+    </div>
     <div class="similarproducts">
-		<h4>Liknande varor</h4>
-
-<div class="productsrow">
-
-    <ul>
+        <h4>Liknande varor</h4>
+        <div class="productsrow">
+            <ul>
                 @foreach (var product in ViewBag.SimilarProducts)
                 {
-                <li>
-                    <a href="@Url.Action("VisaProdukt", "Product", new { id = product.Id })">
-                        <img src="@product.BildUrl" alt="Produktbild">
-                        <h3>@product.Namn</h3>
-                        <p>@product.Pris kr</p>
-                    </a>
-                </li>
+                    <li>
+                        <a href="@Url.Action("VisaProdukt", "Product", new { id = product.Id })">
+                            <img src="@product.BildUrl" alt="Produktbild">
+                            <h3>@product.Namn</h3>
+                            <p>@product.Pris kr</p>
+                        </a>
+                    </li>
                 }
-    </ul>
-    </div>
+            </ul>
+        </div>
     </div>
 </section>
 
-
-
-
-       
+<script>
+    function addToCart(productId) {
+        fetch(`/Product/AddToCart?productId=${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': '@Html.AntiForgeryToken()' 
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Produkt tillagd i kundkorgen');
+                } else {
+                    alert('Kunde inte lägga till produkten i kundkorgen');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
