@@ -8,7 +8,7 @@ namespace ExamensarbeteNy.Controllers
     public class HomeController : Controller
     {
         private readonly ApplicationContext _context;
-        
+
         public HomeController(ApplicationContext context)
         {
             _context = context;
@@ -16,7 +16,6 @@ namespace ExamensarbeteNy.Controllers
 
         public IActionResult Index()
         {
-
             var categoriesWithChildren = _context.Kategorier.Include(k => k.ChildKategorier).ToList();
             ViewBag.AllCategories = categoriesWithChildren;
             ViewBag.AboutLink = Url.Action("About", "Home");
@@ -26,16 +25,14 @@ namespace ExamensarbeteNy.Controllers
 
         public IActionResult VisaProdukter(int? kategoriId, string pris)
         {
-            IQueryable<Produkt> produkterIKategori = _context.Produkter.Include(p => p.Kategori); // Inkludera kategorin för att undvika fel
-            var categoriesWithChildren = _context.Kategorier.Include(k => k.ChildKategorier).ToList(); // Inkludera även child-kategorier för att skicka till vyn
+            IQueryable<Produkt> produkterIKategori = _context.Produkter.Include(p => p.Kategori);
+            var categoriesWithChildren = _context.Kategorier.Include(k => k.ChildKategorier).ToList();
 
-            // Filtrera efter kategori om en kategori valdes
             if (kategoriId.HasValue)
             {
                 produkterIKategori = produkterIKategori.Where(p => p.KategoriId == kategoriId.Value);
             }
 
-            // Filtrera efter prisintervall om ett prisintervall valdes
             if (!string.IsNullOrEmpty(pris))
             {
                 var priceRange = pris.Split('-').Select(int.Parse).ToArray();
@@ -48,40 +45,33 @@ namespace ExamensarbeteNy.Controllers
             ViewBag.AllCategories = categoriesWithChildren;
             return View(produkterIKategori.ToList());
         }
-        public IActionResult Frakt()
+
+        // Övriga åtgärder...
+
+        public IActionResult KontaktaOss()
         {
-            // Här kan du lägga kod för att visa sidan för frakt
-            return View("~/Views/Frakt.cshtml");
-        }
-        public IActionResult Skydd()
-        {
-            // Här kan du lägga kod för att visa sidan för frakt
-            return View("~/Views/Skydd.cshtml");
+            return View();
         }
 
-        public IActionResult KläderTips()
+        [HttpPost]
+        public IActionResult KontaktaOss(ContactFormModel model)
         {
-            // Här kan du lägga kod för att visa sidan för frakt
-            return View("~/Views/KläderTips.cshtml");
-        }
-        public IActionResult InredningTips()
-        {
-            // Här kan du lägga kod för att visa sidan för frakt
-            return View("~/Views/InredningTips.cshtml");
-        }
-        public IActionResult Diy()
-        {
-            // Här kan du lägga kod för att visa sidan för frakt
-            return View("~/Views/Diy.cshtml");
+            if (ModelState.IsValid)
+            {
+                // Hantera formulärdata, t.ex. skicka e-post eller spara i databasen.
+                return RedirectToAction("Tack");
+            }
+
+            // Om modellen är ogiltig, visa formuläret igen med valideringsmeddelanden.
+            return View(model);
         }
 
-        public IActionResult Begagnat()
+        public IActionResult Tack()
         {
-            // Här kan du lägga kod för att visa sidan för frakt
-            return View("~/Views/Begagnat.cshtml");
+            return View();
         }
 
-
+        // Andra åtgärder och metoder...
 
         public IActionResult About()
         {
@@ -92,10 +82,6 @@ namespace ExamensarbeteNy.Controllers
         {
             return View();
         }
-
-
-
-
 
         public IActionResult Privacy()
         {
