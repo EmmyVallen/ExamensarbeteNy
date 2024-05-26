@@ -2,4 +2,11 @@
     ViewData["Title"] = "Bevakningar";
 }
 
-<h1>Bevakningar</h1>
+<h2>Dina Bevakningar</h2>
+
+<ul>
+    @foreach (var bevakning in Model)
+    {
+        <li>@bevakning.Produkt.Namn</li>
+    }
+</ul>

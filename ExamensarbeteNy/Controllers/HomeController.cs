@@ -82,7 +82,30 @@ namespace ExamensarbeteNy.Controllers
         {
             return View();
         }
-
+        public IActionResult Diy()
+        {
+            return View();
+        }
+        public IActionResult InredningTips()
+        {
+            return View();
+        }
+        public IActionResult Frakt()
+        {
+            return View();
+        }
+        public IActionResult Begagnat()
+        {
+            return View();
+        }
+        public IActionResult KläderTips()
+        {
+            return View();
+        }
+        public IActionResult Skydd()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
