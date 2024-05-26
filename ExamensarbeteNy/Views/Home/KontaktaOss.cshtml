@@ -1,0 +1,34 @@
+﻿
+@model ExamensarbeteNy.Models.ContactFormModel
+
+<section class="contact">
+    <div class="contactbox">
+        <div class="wrapper">
+            <h3>Kontakta oss</h3>
+            <p>Fyll i formuläret nedan för att kontakta oss.</p>
+            <form asp-action="KontaktaOss" method="post">
+                <div class="form-group">
+                    <label for="Name">Namn</label>
+                    <input type="text" id="Name" name="Name" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="Subject">Rubrik</label>
+                    <input type="text" id="Subject" name="Subject" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="Message">Ditt meddelande till oss</label>
+                    <textarea id="Message" name="Message" class="form-control" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="Email">E-postadress</label>
+                    <input type="email" id="Email" name="Email" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label for="Phone">Telefonnummer</label>
+                    <input type="tel" id="Phone" name="Phone" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Skicka</button>
+            </form>
+        </div>
+    </div>
+</section>
