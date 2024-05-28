@@ -24,5 +24,7 @@
 
         // Förhållande till bevakningar
         public List<Bevakning> Bevakningar { get; set; } // Navigationsegenskap för att hämta bevakningar
+                                                         // Förhållande till kundkorg
+     
     }
 }
