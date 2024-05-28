@@ -1,5 +1,4 @@
-﻿@model List<Produkt> // Antag att du har en lista med produkter i kundkorgen
-
+﻿@model List<Produkt> 
 <h1>Din kundkorg</h1>
 
 @if (Model != null && Model.Any())
@@ -7,7 +6,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Namn</th>
+                <th>Produkt</th>
                 <th>Pris</th>
                 <th>Beskrivning</th>
             </tr>
@@ -16,9 +15,17 @@
             @foreach (var produkt in Model)
             {
                 <tr>
-                    <td>@produkt.Namn</td>
+                    <td><a href="@Url.Action("VisaProdukt", "Product", new { id = produkt.Id })">@produkt.Namn</a></td>
                     <td>@produkt.Pris</td>
                     <td>@produkt.Beskrivning</td>
+                 
+                                        <td>
+                        <form asp-controller="Kundkorg" asp-action="TaBort" method="post">
+                            <input type="hidden" name="produktId" value="@produkt.Id" />
+                            <button type="submit">Ta bort vara</button>
+                        </form>
+                    </td
+               
                 </tr>
             }
         </tbody>

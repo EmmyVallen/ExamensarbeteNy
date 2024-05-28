@@ -13,8 +13,10 @@
         </div>
     </div>
     <div class="buttonbox">
-        <button onclick="addToCart(@Model.Id)">Lägg till i kundkorg</button>
-        <button>Bevaka vara</button>
+        <form asp-controller="Kundkorg" asp-action="LäggTill" method="post">
+            <input type="hidden" name="produktId" value="@Model.Id" />
+            <button type="submit">Lägg till i kundkorg</button>
+        </form>
     </div>
     <div class="userbox">
         <h5>SÄLJES AV:</h5>
@@ -50,23 +52,3 @@
     </div>
 </section>
 
-<script>
-    function addToCart(productId) {
-        fetch(`/Product/AddToCart?productId=${productId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'RequestVerificationToken': '@Html.AntiForgeryToken()' 
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Produkt tillagd i kundkorgen');
-                } else {
-                    alert('Kunde inte lägga till produkten i kundkorgen');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-    }
-</script>
