@@ -1,12 +1,17 @@
-﻿@{
-    ViewData["Title"] = "Bevakningar";
-}
+﻿@model IEnumerable<ExamensarbeteNy.Models.Bevakning>
 
-<h2>Dina Bevakningar</h2>
+<p>Antal bevakningar: @Model.Count()</p>
 
-<ul>
-    @foreach (var bevakning in Model)
-    {
-        <li>@bevakning.Produkt.Namn</li>
-    }
-</ul>
+<table>
+
+    <tbody>
+        @foreach (var bevakning in Model)
+        {
+            <tr>
+                <td>@bevakning.Id</td>
+                <td>@bevakning.ProduktId</td>
+
+            </tr>
+        }
+    </tbody>
+</table>

@@ -50,44 +50,44 @@
         </div>
 
     @if (Model != null && Model.Any())
-{
-    <div class="productscategory">
-    <ul>
-        @foreach (var produkt in Model)
-        {
-            <li>
-                <div class="produkt-info">
-                    <div class="wrapper">
-                    <a href="@Url.Action("VisaProdukt", "Product", new { id = produkt.Id })">
-                    <img src="@produkt.BildUrl" alt="Produktbild">
-							
-                    <div class="text-info">
-                        <div class="textbox">
-											<h3>@produkt.Namn</h3>
+    {
+        <div class="productscategory">
+            <ul>
+                @foreach (var produkt in Model)
+                {
+                    <li>
+                        <div class="produkt-info">
+                            <div class="wrapper">
+                                <a href="@Url.Action("VisaProdukt", "Product", new { id = produkt.Id })">
+                                    <img src="@produkt.BildUrl" alt="Produktbild">
 								</a>
-											<p>Pris: @produkt.Pris</p>
+                                   
+                                
+                                    
+                              
+                                <div class="text-info">
+									<div class="textbox">
+										<h3>@produkt.Namn</h3>
+                                        <p>Pris: @produkt.Pris</p>
+                                    </div>
+                                    <div class="buttonbox">
+                                        <form asp-controller="Bevakning" asp-action="LäggTill" method="post">
+                                            <input type="hidden" name="produktId" value="@produkt.Id" />
+                                            <button type="submit">Bevaka vara</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+    else
+    {
+        <p>Inga produkter hittades för den angivna kategorin.</p>
+    }
 
-							</div>
-                            
-						
-                        <div class="buttonbox">
-<button>Bevaka vara</button>
-							</div>
-                            
-						</div>
-					
-							
-             
-            </li>
-         
-        }
-    </ul>
-    </div>
-    
-}
-else
-{
-    <p>Inga produkter hittades för den angivna kategorin.</p>
-	}
 </section>
 
