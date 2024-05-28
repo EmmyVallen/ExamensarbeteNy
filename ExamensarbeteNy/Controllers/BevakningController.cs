@@ -16,12 +16,14 @@ namespace ExamensarbeteNy.Controllers
 
         public IActionResult Bevakningar()
         {
-            ViewBag.AllCategories = _context.Kategorier.ToList();
-            // Hämta användarens bevakningar från databasen
-            var bevakningar = _context.Bevakningar.ToList(); // Antag att Bevakningar är en DbSet i din DbContext
+            // Hämta alla bevakningar från databasen och inkludera relaterade data för produkt och användare
+            var bevakningar = _context.Bevakningar
+                .Include(b => b.Produkt)
+                .Include(b => b.Användare)
+                .ToList();
 
+            // Returnera vyn och skicka med bevakningarna som modelldata
             return View(bevakningar);
-
         }
         [HttpPost]
         public IActionResult LäggTill(int produktId)
@@ -29,7 +31,7 @@ namespace ExamensarbeteNy.Controllers
             var bevakning = new Bevakning
             {
                 ProduktId = produktId,
-                AnvändarId = null // Sätta AnvändarId till null om det inte finns något användaridentifierare
+                AnvändarId = null // Sätt ett standardvärde som 0 eller något annat som passar din logik
             };
 
             // Lägg till bevakningen i databasen
