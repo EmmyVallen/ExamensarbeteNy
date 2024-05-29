@@ -19,7 +19,7 @@ namespace ExamensarbeteNy.Controllers
             return View();
 		}
 
-        // Åtgärd för att visa en enskild produkt
+        /*EMMY*/
         public IActionResult VisaProdukt(int id)
         {
             ViewBag.AllCategories = _context.Kategorier.ToList();
@@ -28,9 +28,9 @@ namespace ExamensarbeteNy.Controllers
 
             if (produkt == null)
             {
-                return NotFound(); // Returnera 404 Not Found om produkten inte hittas
+                return NotFound(); 
             }
-			// Hämta fyra produkter från samma kategori som den aktuella produkten
+			
 			var similarProducts = _context.Produkter
 				.Where(p => p.KategoriId == produkt.KategoriId && p.Id != produkt.Id)
 				.Take(4)
@@ -38,7 +38,7 @@ namespace ExamensarbeteNy.Controllers
 
 			ViewBag.SimilarProducts = similarProducts;
 
-			return View(produkt); // Returnera vyn för att visa produkten
+			return View(produkt); 
         }
 
 
@@ -47,7 +47,7 @@ namespace ExamensarbeteNy.Controllers
         {
             return View();
         }
-
+        /*EMMY*/
         // Hantera POST-begäran för att spara den nya produkten
         [HttpPost]
         public IActionResult SkapaProdukt(Produkt produkt)

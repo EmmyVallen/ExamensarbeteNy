@@ -13,7 +13,7 @@ namespace ExamensarbeteNy.Controllers
             _context = context;
         }
 
-
+/*DETTA HAR EMMY GJORT*/
         public IActionResult Bevakningar()
         {
             // Hämta alla bevakningar från databasen och inkludera relaterade data för produkt och användare

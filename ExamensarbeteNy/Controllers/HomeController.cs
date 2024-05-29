@@ -13,7 +13,7 @@ namespace ExamensarbeteNy.Controllers
         {
             _context = context;
         }
-
+        /*EMMY*/
         public IActionResult Index()
         {
             var categoriesWithChildren = _context.Kategorier.Include(k => k.ChildKategorier).ToList();
@@ -22,7 +22,7 @@ namespace ExamensarbeteNy.Controllers
             ViewBag.TermsLink = Url.Action("Terms", "Home");
             return View();
         }
-
+        /*EMMY*/
         public IActionResult VisaProdukter(int? kategoriId, string pris)
         {
             IQueryable<Produkt> produkterIKategori = _context.Produkter.Include(p => p.Kategori);
@@ -46,7 +46,7 @@ namespace ExamensarbeteNy.Controllers
             return View(produkterIKategori.ToList());
         }
 
-        // Övriga åtgärder...
+  
 
         public IActionResult KontaktaOss()
         {
