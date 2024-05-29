@@ -15,7 +15,7 @@
             @foreach (var produkt in Model)
             {
                 <tr>
-                    <td><a href="@Url.Action("VisaProdukt", "Product", new { id = produkt.Id })">@produkt.Namn</a></td>
+                                  <td><a href="@Url.Action("VisaProdukt", "Product", new { id = produkt.Id })" onmouseover="hoverProduct(this)" onmouseout="unhoverProduct(this)">@produkt.Namn</a></td>
                     <td>@produkt.Pris</td>
                     <td>@produkt.Beskrivning</td>
                  
@@ -35,8 +35,26 @@ else
 {
     <p>Din kundkorg är tom.</p>
 }
-
-<form action="@Url.Action("Index", "Betalning")" method="get">
-    <button type="submit">Köp varor</button>
+<form id="buyForm" action="@Url.Action("Index", "Betalning")" method="get">
+    <button id="buyButton" type="submit">Köp varor</button>
 </form>
 
+<script>
+        var buyButton = document.getElementById("buyButton");
+
+    buyButton.addEventListener("mouseover", function() {
+        buyButton.style.backgroundColor = "rgba(169, 185, 175, 0.4) "; // Ändra bakgrundsfärgen när musen hovrar över knappen
+    });
+
+    buyButton.addEventListener("mouseout", function() {
+        buyButton.style.backgroundColor = ""; // Återställ till standardbakgrundsfärgen när musen lämnar knappen
+    });
+
+    function hoverProduct(element) {
+        element.style.color = "rgba(169, 185, 175, 0.4) "; // Ändra textfärgen när musen hovrar över länken
+    }
+
+    function unhoverProduct(element) {
+        element.style.color = ""; // Återställ till standardtextfärgen när musen lämnar länken
+    }
+</script>
