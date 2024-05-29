@@ -9,7 +9,7 @@
 <div class="skapaannons">
     <h4>Skapa annons</h4>
     <p>Skapa ny annons genom att klicka på knappen nedan!</p>
-<a class="btn btn-primary" asp-controller="Product" asp-action="SkapaProdukt">Lägg in annons</a>
+    <a id="skapaAnnonsBtn" class="btn btn-primary" asp-controller="Product" asp-action="SkapaProdukt">Lägg in annons</a>
 </div>
 
 <section class="categorysection">
@@ -103,6 +103,16 @@
 </section>
 
 <script>
+
+    var skapaAnnonsBtn = document.getElementById("skapaAnnonsBtn");
+
+    skapaAnnonsBtn.addEventListener("mouseover", function () {
+        skapaAnnonsBtn.style.backgroundColor = "#17a2b8"; // Ändra bakgrundsfärgen när musen hovrar över knappen
+    });
+
+    skapaAnnonsBtn.addEventListener("mouseout", function () {
+        skapaAnnonsBtn.style.backgroundColor = ""; // Återställ till standardbakgrundsfärgen när musen lämnar knappen
+    });
   
     window.onscroll = function() {
         scrollFunction();
