@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<ExamensarbeteNy.Models.Bevakning>
-
+<!--EMMY-->
 <p>Antal bevakningar: @Model.Count()</p>
 
 <table>
@@ -15,3 +15,5 @@
         }
     </tbody>
 </table>
+
+<a href="@Url.Action("Index", "Home")" class="btn btn-primary">Till startsidan</a>

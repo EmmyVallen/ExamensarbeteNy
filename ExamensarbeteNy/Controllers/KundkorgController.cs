@@ -12,6 +12,8 @@ namespace ExamensarbeteNy.Controllers
         {
             _context = context;
         }
+
+        /*EMMY*/
         public IActionResult Index()
         {
             // Hämta alla produkter i kundkorgen från databasen
@@ -35,7 +37,7 @@ namespace ExamensarbeteNy.Controllers
 
             if (productToRemove != null)
             {
-                // Ta bort produkten från kundkorgen
+                // Ta bort produkten från kundkorgen - DENNA TAR BORT FRÅN DATABASEN OCKSÅ.
                 _context.Produkter.Remove(productToRemove);
                 _context.SaveChanges();
             }
