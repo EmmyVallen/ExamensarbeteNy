@@ -24,9 +24,47 @@ namespace ExamensarbeteNy.Controllers
             return View(productsInCart);
         }
         [HttpPost]
+        //FUNGERAR EJ.
         public IActionResult LäggTill(int productId)
         {
-            return View();
+            // Hämta kundvagnen från databasen, om den finns
+            var kundvagn = _context.Kundkorgar
+                .Include(k => k.Produkter)
+                .FirstOrDefault();
+
+            // Om kundvagnen inte finns, skapa en ny
+            if (kundvagn == null)
+            {
+                kundvagn = new Kundkorg
+                {
+                    Produkter = new List<Produkt>() // Skapa en ny lista för produkterna i kundvagnen
+                };
+
+                // Lägg till kundvagnen i databasen
+                _context.Kundkorgar.Add(kundvagn);
+                _context.SaveChanges();
+            }
+
+            // Hämta produkten från databasen
+            var produkt = _context.Produkter.Find(productId);
+
+            // Kontrollera om produkten finns
+            if (produkt != null)
+            {
+                // Lägg till produkten i kundvagnen
+                kundvagn.Produkter.Add(produkt);
+
+                // Spara ändringar i databasen
+                _context.SaveChanges();
+
+                // Återvänd till en vy eller sidan som indikerar att produkten har lagts till i kundvagnen
+                return View();
+            }
+            else
+            {
+                // Produkten kunde inte hittas, utför lämplig åtgärd, t.ex. visa ett felmeddelande
+                return RedirectToAction("ProduktSaknas", "Fel");
+            }
         }
 
         [HttpPost]
