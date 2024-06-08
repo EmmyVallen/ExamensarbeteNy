@@ -17,42 +17,47 @@ namespace ExamensarbeteNy.Controllers
 
         public IActionResult Bevakningar()
         {
-            // Hämta alla bevakningar från databasen och inkludera relaterade data för produkt och användare
-            var bevakningar = _context.Bevakningar
-                .Include(b => b.Produkt)
-                .Include(b => b.Användare)
+
+            // Hämta bevakningar från databasen med relaterad produktinformation
+            var bevakningarMedProduktInfo = _context.Bevakningar
+                .Include(b => b.Produkt) // Anslut till Produkt för att få produktens detaljer
                 .ToList();
-            // Logga varje bevakning
-            foreach (var bevakning in bevakningar)
-            {
-                _logger.LogInformation($"Bevakning Id: {bevakning.Id}, ProduktId: {bevakning.ProduktId}, AnvändarId: {bevakning.AnvändarId}");
-            }
 
-            // Logga antal bevakningar som hittades
-            _logger.LogInformation($"Antal bevakningar hämtade: {bevakningar.Count}");
-
-            // Returnera vyn och skicka med bevakningarna som modelldata
-            return View(bevakningar);
+            // Skicka bevakningarna till vyn som en modell
+            return View(bevakningarMedProduktInfo);
         }
 
         [HttpPost]
         public IActionResult LäggTill(int produktId)
         {
+            // Skapa en ny bevakning för den angivna produkten
             var bevakning = new Bevakning
             {
-                ProduktId = produktId,
-                AnvändarId = null // Sätt ett standardvärde som 0 eller något annat som passar din logik
+                ProduktId = produktId
             };
 
             // Lägg till bevakningen i databasen
             _context.Bevakningar.Add(bevakning);
             _context.SaveChanges();
 
-            // Logga att en bevakning har lagts till
-            _logger.LogInformation($"Ny bevakning tillagd för produktId: {produktId}");
-
-            // Redirect tillbaka till sidan där användaren var
-            return RedirectToAction("VisaProdukter", "Home");
+            // Redirect tillbaka till produktsidan eller annan lämplig sida
+            return RedirectToAction("Index", "Home");
         }
+        public IActionResult TaBort(int id)
+        {
+            // Hämta bevakningen från databasen
+            var bevakning = _context.Bevakningar.FirstOrDefault(b => b.Id == id);
+
+            if (bevakning != null)
+            {
+                // Ta bort bevakningen från databasen
+                _context.Bevakningar.Remove(bevakning);
+                _context.SaveChanges();
+            }
+
+            // Omdirigera tillbaka till bevakningslistan
+            return RedirectToAction("Bevakningar");
+        }
+
     }
 }
