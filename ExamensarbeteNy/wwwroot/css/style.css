@@ -162,7 +162,11 @@ section.category .productscategory .produkt-info a{text-decoration:none; color:b
         section.category .productscategory .produkt-info .buttonbox button:hover{background-color:lightgray;}
 
         section.blogsection{margin-top:50px;}
-            .text{background-color:#d9d9d9; height:150px; border-radius: 0px 0px 10px 10px;}
+            section.blogsection .text {
+                background-color: #d9d9d9;
+                height: 150px;
+                border-radius: 0px 0px 10px 10px;
+            }
                 .text h4{color:black; font-weight:600; text-align:center; padding-top:10px;}
 
 
@@ -272,7 +276,7 @@ section.product .information .boxes {
 section.product .information .boxes .first {
     padding: 20px;
     background-color: #D9D9D9;
-    width: 250px;
+    width: 400px;
 }
 section.product .similarproducts h4{margin-bottom:30px;}
 section.product .similarproducts ul {
@@ -311,6 +315,43 @@ section.product .similarproducts .productsrow{background-color: #D9D9D9; padding
 
     /*SKAPA ANNONS SIDA*/
 btn btn-primary{margin-top:10px;}
+
+/*FRAKT*/
+.wrapper .frakt table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.wrapper .frakt th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+.wrapper .frakt th {
+    background-color: #f2f2f2;
+}
+
+/*INREDNINGTIPS*/
+
+
+.wrapper .inredning .tip {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+}
+
+
+
+    /*KLÄDERTIPS*/
+
+.wrapper .kläder .tip {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+}
+
+
 /*FOOTER*/
 footer {
     background-color: rgba(169, 185, 175, 0.4) !important;

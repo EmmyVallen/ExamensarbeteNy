@@ -1,16 +1,32 @@
 ﻿@model IEnumerable<ExamensarbeteNy.Models.Bevakning>
-<!--EMMY-->
+<h1>Dina bevakningar:</h1>
 <p>Antal bevakningar: @Model.Count()</p>
 
 <table>
-
+    <thead>
+        <tr>
+            <th>Bild</th>
+            <th>Namn</th>
+            <th>Pris</th>
+            <th>Länk</th>
+        </tr>
+    </thead>
     <tbody>
         @foreach (var bevakning in Model)
         {
             <tr>
-                <td>@bevakning.Id</td>
-                <td>@bevakning.ProduktId</td>
-
+                <td>
+                    <img src="@bevakning.Produkt.BildUrl" alt="Produktbild" />
+                </td>
+                <td>@bevakning.Produkt.Namn</td>
+                <td>@bevakning.Produkt.Pris</td>
+                <td>
+                    <a href="@Url.Action("VisaProdukt", "Product", new { id = bevakning.Produkt.Id })">Gå till produkt</a>
+                </td>
+                <td>
+                    <!-- Länk för att ta bort bevakningen -->
+                    <a href="@Url.Action("TaBort", "Bevakning", new { id = bevakning.Id })">Ta bort</a>
+                </td>
             </tr>
         }
     </tbody>
