@@ -4,9 +4,7 @@
     {
         public int Id { get; set; }
 
-      
 
-        // Förhållande till produkter
-        public List<Produkt> Produkter { get; set; } // Navigationsegenskap för att hämta produkterna i kundkorgen
+        public List<KundkorgProdukt> KundkorgProdukter { get; set; } // Navigationsegenskap för att hämta kopplingstabellen
     }
 }

@@ -4,14 +4,16 @@ using ExamensarbeteNy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExamensarbeteNy.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240609062921_addingKundkorgproduktToTable")]
+    partial class addingKundkorgproduktToTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,7 +114,7 @@ namespace ExamensarbeteNy.Migrations
 
                     b.HasIndex("ProduktId");
 
-                    b.ToTable("KundkorgProdukter");
+                    b.ToTable("KundkorgProdukt");
                 });
 
             modelBuilder.Entity("ExamensarbeteNy.Models.Produkt", b =>

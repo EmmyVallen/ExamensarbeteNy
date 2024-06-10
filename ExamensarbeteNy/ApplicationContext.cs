@@ -18,6 +18,7 @@ namespace ExamensarbeteNy
 
         public DbSet<Bevakning> Bevakningar { get; set; }
         public DbSet<Kundkorg> Kundkorgar { get; set; }
+        public DbSet<KundkorgProdukt> KundkorgProdukter { get; set; }
         public DbSet<ChildKategori> ChildKategorier { get; set; }
 
      
