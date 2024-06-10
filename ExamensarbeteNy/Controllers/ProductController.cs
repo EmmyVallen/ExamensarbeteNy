@@ -8,10 +8,12 @@ namespace ExamensarbeteNy.Controllers
     public class ProductController : Controller
     {
         private readonly ApplicationContext _context;
+        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(ApplicationContext context)
+        public ProductController(ApplicationContext context, ILogger<ProductController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public IActionResult Index()
@@ -47,8 +49,12 @@ namespace ExamensarbeteNy.Controllers
         // Visa formuläret för att skapa en ny produkt
         public IActionResult SkapaProdukt()
         {
-            ViewBag.Kategorier = new SelectList(_context.Kategorier, "Id", "Namn");
-            ViewBag.ChildKategorier = new SelectList(_context.ChildKategorier, "Id", "Namn");
+            // Hämta befintliga kategorier och underkategorier från databasen
+            var kategorier = _context.Kategorier.ToList();
+            ViewBag.Kategorier = kategorier;
+            var childKategorier = _context.ChildKategorier.ToList();
+            ViewBag.ChildKategorier = childKategorier;
+
             return View();
         }
 
@@ -56,20 +62,34 @@ namespace ExamensarbeteNy.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SkapaProdukt(Produkt produkt)
         {
+            if (produkt.KundkorgProdukter == null)
+            {
+                ModelState.Remove("KundkorgProdukter");
+            }
             if (ModelState.IsValid)
             {
-                _context.Produkter.Add(produkt); // Lägg till den nya produkten i DbSet
-                _context.SaveChanges(); // Spara ändringarna till databasen
-
-                return RedirectToAction("Index"); // Omdirigera till översikten av produkter
+                _context.Produkter.Add(produkt);
+                _context.SaveChanges();
+                _logger.LogInformation("Ny produkt skapad: {ProduktNamn}", produkt.Namn); // Logga information om den nya produkten
+                return RedirectToAction("Index", "Home");
             }
 
-            // Om modellen inte är giltig, återställ ModelState med tidigare värden
-            // och återgå till vyn med de tidigare inskickade värdena
-            ViewBag.Kategorier = new SelectList(_context.Kategorier, "Id", "Namn");
-            ViewBag.ChildKategorier = new SelectList(_context.ChildKategorier, "Id", "Namn");
-            return View(produkt);
+            _logger.LogError("ModelState är inte giltig");
 
+            // Logga ModelState-fel
+            foreach (var modelState in ModelState.Values)
+            {
+                foreach (var error in modelState.Errors)
+                {
+                    _logger.LogError(error.ErrorMessage);
+                }
+            }
+
+          
+            ViewBag.Kategorier = _context.Kategorier.ToList();
+            ViewBag.ChildKategorier = _context.ChildKategorier.ToList();
+
+            return View(produkt);
         }
     }
 }

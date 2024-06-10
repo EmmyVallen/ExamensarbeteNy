@@ -1,4 +1,5 @@
 ﻿using ExamensarbeteNy.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,56 +17,50 @@ namespace ExamensarbeteNy.Controllers
         /*EMMY*/
         public IActionResult Index()
         {
-            // Hämta alla produkter i kundkorgen från databasen
-            var productsInCart = _context.Kundkorgar
-                .Include(k => k.Produkter)
-                .FirstOrDefault()?.Produkter;
+            var kundkorgId = 1; // Antag att kundkorgId är 1 för detta exempel
 
-            return View(productsInCart);
+            // Hämta produkterna från kundkorgsprodukter baserat på kundkorgens id
+            var kundkorgProdukter = _context.KundkorgProdukter
+                                            .Where(kp => kp.KundkorgId == kundkorgId)
+                                            .Include(kp => kp.Produkt)
+                                            .Select(kp => kp.Produkt)
+                                            .ToList();
+
+            return View(kundkorgProdukter);
         }
+
+
         [HttpPost]
-        //FUNGERAR EJ.
-        public IActionResult LäggTill(int productId)
+        public IActionResult LäggTill(int produktId)
         {
-            // Hämta kundvagnen från databasen, om den finns
-            var kundvagn = _context.Kundkorgar
-                .Include(k => k.Produkter)
-                .FirstOrDefault();
+            var kundkorgId = 1; // Antag att kundkorgId är 1 för detta exempel
 
-            // Om kundvagnen inte finns, skapa en ny
-            if (kundvagn == null)
-            {
-                kundvagn = new Kundkorg
-                {
-                    Produkter = new List<Produkt>() // Skapa en ny lista för produkterna i kundvagnen
-                };
+            var produkt = _context.KundkorgProdukter
+                                  .Include(kp => kp.Produkt)
+                                  .FirstOrDefault(kp => kp.ProduktId == produktId && kp.KundkorgId == kundkorgId)?.Produkt;
 
-                // Lägg till kundvagnen i databasen
-                _context.Kundkorgar.Add(kundvagn);
-                _context.SaveChanges();
-            }
-
-            // Hämta produkten från databasen
-            var produkt = _context.Produkter.Find(productId);
-
-            // Kontrollera om produkten finns
             if (produkt != null)
             {
-                // Lägg till produkten i kundvagnen
-                kundvagn.Produkter.Add(produkt);
-
-                // Spara ändringar i databasen
-                _context.SaveChanges();
-
-                // Återvänd till en vy eller sidan som indikerar att produkten har lagts till i kundvagnen
-                return View();
+                // Produkten finns i kundkorgen, du kan göra vad som krävs här
+                // Till exempel: ange en meddelande att produkten redan finns i kundkorgen
             }
             else
             {
-                // Produkten kunde inte hittas, utför lämplig åtgärd, t.ex. visa ett felmeddelande
-                return RedirectToAction("ProduktSaknas", "Fel");
+                // Produkten finns inte i kundkorgen, lägg till den
+                var kundkorgProdukt = new KundkorgProdukt
+                {
+                    ProduktId = produktId,
+                    KundkorgId = kundkorgId
+                };
+
+                _context.KundkorgProdukter.Add(kundkorgProdukt);
+                _context.SaveChanges();
             }
+
+            return RedirectToAction("Index", "Home");
         }
+
+
 
         [HttpPost]
         public IActionResult TaBort(int produktId)
@@ -86,3 +81,4 @@ namespace ExamensarbeteNy.Controllers
 
     }
 }
+

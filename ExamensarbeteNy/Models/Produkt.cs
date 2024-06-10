@@ -15,17 +15,15 @@ namespace ExamensarbeteNy.Models
         [Required(ErrorMessage = "Bild är obligatoriskt")]
         public string BildUrl { get; set; } // Egenskap för att lagra bildens sökväg
 
-        // Förhållande till kategorin
-
+       
         public int KategoriId { get; set; } // Foreign key för kategorin
         public Kategori Kategori { get; set; } // Navigationsegenskap för att hämta kategorin
 
-        // Förhållande till child-kategori
-     
+       
         public int? ChildKategoriId { get; set; } // Foreign key för child-kategori
         public ChildKategori ChildKategori { get; set; } // Navigationsegenskap för att hämta child-kategori
 
-
+        public List<KundkorgProdukt> KundkorgProdukter { get; set; } // Navigationsegenskap för att hämta kopplingstabellen
 
         // Förhållande till bevakningar
         public List<Bevakning> Bevakningar { get; set; } = new List<Bevakning>();

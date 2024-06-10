@@ -76,33 +76,7 @@
 
 
 
-        <script>
-        document.getElementById('sortDropdown').addEventListener('change', function () {
-        var selectedValue = this.value;
-        var ul = document.querySelector('.productscategory ul');
-        var li = Array.from(ul.getElementsByTagName('li'));
 
-        if (selectedValue === 'prisAsc') {
-        li.sort(function (a, b) {
-        var priceA = parseFloat(a.querySelector('.textbox p').innerText.split(' ')[1]);
-        var priceB = parseFloat(b.querySelector('.textbox p').innerText.split(' ')[1]);
-        return priceA - priceB;
-        });
-        } else if (selectedValue === 'prisDesc') {
-        li.sort(function (a, b) {
-        var priceA = parseFloat(a.querySelector('.textbox p').innerText.split(' ')[1]);
-        var priceB = parseFloat(b.querySelector('.textbox p').innerText.split(' ')[1]);
-        return priceB - priceA;
-        });
-        }
-
-        li.forEach(function (elem) {
-        ul.appendChild(elem);
-        });
-        });
-
-
-        </script>
 
 
     </footer>

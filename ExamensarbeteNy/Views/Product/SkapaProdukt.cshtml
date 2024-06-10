@@ -5,23 +5,13 @@
 <br>
 <p>I BildUrl kopierar ni in en URL från en webbsida.</p>
 
-<form asp-controller="Product" asp-action="SkapaProdukt" method="post">
-
-    <input type="hidden" asp-for="Id" />
+<form asp-action="SkapaProdukt" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Namn">Namn:</label>
         <input asp-for="Namn" class="form-control" />
         <span asp-validation-for="Namn" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="KategoriId">Kategori:</label>
-        <select asp-for="KategoriId" class="form-control" asp-items="ViewBag.Kategorier"></select>
-        <span asp-validation-for="KategoriId" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ChildKategoriId">Underkategori:</label>
-        <select asp-for="ChildKategoriId" class="form-control" asp-items="ViewBag.ChildKategorier"></select>
-        <span asp-validation-for="ChildKategoriId" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Beskrivning">Beskrivning:</label>
@@ -39,7 +29,39 @@
         <span asp-validation-for="BildUrl" class="text-danger"></span>
     </div>
 
+    <div class="form-group">
+        <label asp-for="KategoriId">Kategori:</label>
+        <select asp-for="KategoriId" class="form-control">
+            <option value="">Välj en kategori</option>
+            @foreach (var kategori in ViewBag.Kategorier)
+            {
+                <option value="@kategori.Id">@kategori.Namn</option>
+            }
+        </select>
+        <span asp-validation-for="KategoriId" class="text-danger"></span>
+        <!-- Lägg till fält för beskrivning -->
+        <input type="text" asp-for="Kategori.Beskrivning" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ChildKategoriId">Underkategori:</label>
+        <select asp-for="ChildKategoriId" class="form-control">
+            <option value="">Välj en underkategori</option>
+            @foreach (var childKategori in ViewBag.ChildKategorier)
+            {
+                <option value="@childKategori.Id">@childKategori.Namn</option>
+            }
+        </select>
+        <span asp-validation-for="ChildKategoriId" class="text-danger"></span>
+        <!-- Lägg till fält för beskrivning -->
+        <input type="text" asp-for="ChildKategori.Beskrivning" class="form-control"  />
+    </div>
+
     <button type="submit" class="btn btn-primary">Skapa</button>
 </form>
 
 <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Till startsidan</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
