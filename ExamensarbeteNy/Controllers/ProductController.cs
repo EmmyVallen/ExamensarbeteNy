@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using ExamensarbeteNy.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using ExamensarbeteNy.ViewModels;
+using System.Diagnostics;
 
 namespace ExamensarbeteNy.Controllers
 {
@@ -47,49 +49,95 @@ namespace ExamensarbeteNy.Controllers
 
 
         // Visa formuläret för att skapa en ny produkt
+        [HttpGet]
         public IActionResult SkapaProdukt()
         {
-            // Hämta befintliga kategorier och underkategorier från databasen
-            var kategorier = _context.Kategorier.ToList();
-            ViewBag.Kategorier = kategorier;
-            var childKategorier = _context.ChildKategorier.ToList();
-            ViewBag.ChildKategorier = childKategorier;
+            var model = new AnnonsViewModel
+            {
+                Kategorier = _context.Kategorier
+                    .Select(k => new SelectListItem
+                    {
+                        Value = k.Id.ToString(),
+                        Text = k.Namn
+                    })
+                    .ToList(),
+                ChildKategorier = _context.ChildKategorier
+                    .Select(ck => new SelectListItem
+                    {
+                        Value = ck.Id.ToString(),
+                        Text = ck.Namn
+                    })
+                    .ToList()
+            };
 
-            return View();
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult SkapaProdukt(Produkt produkt)
+        public IActionResult SkapaProdukt(AnnonsViewModel model)
         {
-            if (produkt.KundkorgProdukter == null)
+            if (!ModelState.IsValid)
             {
-                ModelState.Remove("KundkorgProdukter");
+                // Om valideringen misslyckas, ladda om dropdown-listorna
+                model.Kategorier = _context.Kategorier
+                    .Select(k => new SelectListItem
+                    {
+                        Value = k.Id.ToString(),
+                        Text = k.Namn
+                    })
+                    .ToList();
+                model.ChildKategorier = _context.ChildKategorier
+                    .Select(ck => new SelectListItem
+                    {
+                        Value = ck.Id.ToString(),
+                        Text = ck.Namn
+                    })
+                    .ToList();
+
+                return View(model);
             }
-            if (ModelState.IsValid)
+
+            try
             {
+                var produkt = new Produkt
+                {
+                    Namn = model.Namn,
+                    Beskrivning = model.Beskrivning,
+                    Pris = model.Pris,
+                    BildUrl = model.BildUrl,
+                    KategoriId = model.KategoriId,
+                    ChildKategoriId = model.ChildKategoriId.Value  // Se till att ChildKategoriId är en obligatoriskt fält i modellen
+                };
+
                 _context.Produkter.Add(produkt);
                 _context.SaveChanges();
-                _logger.LogInformation("Ny produkt skapad: {ProduktNamn}", produkt.Namn); // Logga information om den nya produkten
+
                 return RedirectToAction("Index", "Home");
             }
-
-            _logger.LogError("ModelState är inte giltig");
-
-            // Logga ModelState-fel
-            foreach (var modelState in ModelState.Values)
+            catch (Exception ex)
             {
-                foreach (var error in modelState.Errors)
-                {
-                    _logger.LogError(error.ErrorMessage);
-                }
+                Debug.WriteLine($"Exception: {ex.Message}");
+                ModelState.AddModelError("", "Ett fel uppstod när annonsen skulle sparas. Försök igen senare.");
             }
 
-          
-            ViewBag.Kategorier = _context.Kategorier.ToList();
-            ViewBag.ChildKategorier = _context.ChildKategorier.ToList();
+            // Om något går fel, ladda om dropdown-listorna
+            model.Kategorier = _context.Kategorier
+                .Select(k => new SelectListItem
+                {
+                    Value = k.Id.ToString(),
+                    Text = k.Namn
+                })
+                .ToList();
+            model.ChildKategorier = _context.ChildKategorier
+                .Select(ck => new SelectListItem
+                {
+                    Value = ck.Id.ToString(),
+                    Text = ck.Namn
+                })
+                .ToList();
 
-            return View(produkt);
+            return View(model);
         }
     }
 }

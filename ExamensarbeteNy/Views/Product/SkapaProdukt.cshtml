@@ -1,67 +1,55 @@
-﻿@model ExamensarbeteNy.Models.Produkt
+﻿@using ExamensarbeteNy.ViewModels;
+@model AnnonsViewModel
 
-<h1>Skapa en ny annons</h1>
-<p>Här nedan skapar du din annons</p>
-<br>
-<p>I BildUrl kopierar ni in en URL från en webbsida.</p>
+@{
+    ViewData["Title"] = "Skapa Annons";
+}
 
-<form asp-action="SkapaProdukt" method="post">
-    @Html.AntiForgeryToken()
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<h1>Skapa Annons</h1>
+
+<form asp-action="SkapaProdukt" method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label asp-for="Namn">Namn:</label>
+        <label asp-for="Namn"></label>
         <input asp-for="Namn" class="form-control" />
         <span asp-validation-for="Namn" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Beskrivning">Beskrivning:</label>
+        <label asp-for="Beskrivning"></label>
         <input asp-for="Beskrivning" class="form-control" />
         <span asp-validation-for="Beskrivning" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Pris">Pris:</label>
+        <label asp-for="Pris"></label>
         <input asp-for="Pris" class="form-control" />
         <span asp-validation-for="Pris" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="BildUrl">Bild URL:</label>
+        <label asp-for="BildUrl"></label>
         <input asp-for="BildUrl" class="form-control" />
         <span asp-validation-for="BildUrl" class="text-danger"></span>
     </div>
-
     <div class="form-group">
-        <label asp-for="KategoriId">Kategori:</label>
-        <select asp-for="KategoriId" class="form-control">
-            <option value="">Välj en kategori</option>
-            @foreach (var kategori in ViewBag.Kategorier)
-            {
-                <option value="@kategori.Id">@kategori.Namn</option>
-            }
+        <label asp-for="KategoriId"></label>
+        <select asp-for="KategoriId" class="form-control" asp-items="Model.Kategorier">
+            <option value="">Välj en kategori...</option>
         </select>
         <span asp-validation-for="KategoriId" class="text-danger"></span>
-        <!-- Lägg till fält för beskrivning -->
-        <input type="text" asp-for="Kategori.Beskrivning" class="form-control" />
     </div>
-
     <div class="form-group">
-        <label asp-for="ChildKategoriId">Underkategori:</label>
-        <select asp-for="ChildKategoriId" class="form-control">
-            <option value="">Välj en underkategori</option>
-            @foreach (var childKategori in ViewBag.ChildKategorier)
-            {
-                <option value="@childKategori.Id">@childKategori.Namn</option>
-            }
+        <label asp-for="ChildKategoriId"></label>
+        <select asp-for="ChildKategoriId" class="form-control" asp-items="Model.ChildKategorier">
+            <option value="">Välj en underkategori...</option>
         </select>
         <span asp-validation-for="ChildKategoriId" class="text-danger"></span>
-        <!-- Lägg till fält för beskrivning -->
-        <input type="text" asp-for="ChildKategori.Beskrivning" class="form-control"  />
     </div>
-
     <button type="submit" class="btn btn-primary">Skapa</button>
 </form>
 
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
 <a href="@Url.Action("Index", "Home")" class="btn btn-primary">Till startsidan</a>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
